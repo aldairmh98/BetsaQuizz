@@ -1,0 +1,226 @@
+---
+swagger: "2.0"
+info:
+  description: "Api que describe las funcionalidades básicas del primer prototipo\
+    \ para mi aplicación de momingo."
+  version: "1.0.0"
+  title: "Swagger Momingo"
+  contact:
+    email: "aldairmh@outlook.es"
+host: "localhost:10010"
+x-google-endpoints:
+- name: "[API_NAME].endpoints.[PROJECT_ID].cloud.goog"
+  allowCors: True
+basePath: "/"
+schemes:
+#- "https"
+- "http"
+paths:
+  /login:
+    get:
+      tags:
+      - "usuarios"
+      operationId: "login"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Login correcto"
+          schema:
+            $ref: "#/definitions/UsuarioPerfil"
+        404:
+          description: "Usuario no concuerda"
+      x-swagger-router-controller: "Usuarios"
+  /usuarios:
+    get:
+      tags:
+      - "usuarios"
+      summary: "Busca a un solo usuario"
+      operationId: "buscaUsuario"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "query"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "El usuario se encontró"
+          schema:
+            $ref: "#/definitions/UsuarioPerfil"
+        404:
+          description: "Usuario no concuerda"
+      x-swagger-router-controller: "Usuarios"
+    post:
+      tags:
+      - "usuarios"
+      description: "Registro de los usuarios"
+      operationId: "crearUsuario"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "usuario"
+        description: "Usuario que se va a registrar"
+        required: true
+        schema:
+          $ref: "#/definitions/UsuarioRegistro"
+      responses:
+        201:
+          description: "El usuario fue creado con exito"
+        409:
+          description: "El usuario ya existe"
+      x-swagger-router-controller: "Usuarios"
+    put:
+      tags:
+      - "usuarios"
+      description: "Aquí son modificaciones generales, nombre de usuario, descripcion\
+        \ e email"
+      operationId: "actualizaUsuario"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "id_usuario"
+        in: "query"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "usuario"
+        description: "Usuario que se va a registrar"
+        required: true
+        schema:
+          $ref: "#/definitions/UsuarioPerfil"
+      responses:
+        201:
+          description: "El usuario fue modificado con exito"
+        409:
+          description: "El usuario ya existe"
+      x-swagger-router-controller: "Usuarios"
+    delete:
+      tags:
+      - "usuarios"
+      description: "Aquí se elimina el usuario"
+      operationId: "deleteUsuario"
+      parameters:
+      - name: "id"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        201:
+          description: "El usuario fue borrado con exito"
+        409:
+          description: "El usuario ya existe"
+      x-swagger-router-controller: "Usuarios"
+  /preguntas:
+    post:
+      tags:
+      - "Preguntas"
+      summary: "Publicaciòn de una nueva pregunta"
+      description: "Se deberà mandar un JSON donde contenga la pregunta y sus posibles\
+        \ respuestas"
+      operationId: "createPregunta"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "pregunta"
+        description: "La pregunta con sus respuestas"
+        required: true
+        schema:
+          $ref: "#/definitions/Pregunta"
+      responses:
+        202:
+          description: "Fue creado correctamente"
+        409:
+          description: "Something went wrong"
+      x-swagger-router-controller: "Preguntas"
+  /quizz:
+    get:
+      tags:
+      - "Quizz"
+      summary: "Retorna el  cuestionario de forma aleatoria"
+      description: "El servidor generarà un quizz de 10 preguntas."
+      operationId: "getQuizz"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Pregunta"
+      x-swagger-router-controller: "Quizz"
+definitions:
+  UsuarioRegistro:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
+      email:
+        type: "string"
+    example:
+      password: "password"
+      email: "email"
+      username: "username"
+  UsuarioPerfil:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      username:
+        type: "string"
+      email:
+        type: "string"
+      description:
+        type: "string"
+    example:
+      description: "description"
+      id: 0
+      email: "email"
+      username: "username"
+  Pregunta:
+    type: "object"
+    properties:
+      pregunta:
+        type: "string"
+      respuestas:
+        type: "array"
+        items:
+          $ref: "#/definitions/Respuesta"
+    example:
+      respuestas:
+      - bandera: true
+        id: 0
+        respuesta: "respuesta"
+      - bandera: true
+        id: 0
+        respuesta: "respuesta"
+      pregunta: "pregunta"
+  Respuesta:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      respuesta:
+        type: "string"
+      bandera:
+        type: "boolean"
+    example:
+      bandera: true
+      id: 0
+      respuesta: "respuesta"

@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "betsa",
+    "password": "12345",
+    "database": "quizzgame",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "betsa",
+    "password": "12345",
+    "database": "quizzgame",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "betsa",
+    "password": "12345",
+    "database": "quizzgame",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
