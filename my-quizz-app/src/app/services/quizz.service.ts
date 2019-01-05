@@ -8,7 +8,7 @@ import { Pregunta } from '../model/pregunta';
 export class QuizzService {
   private url: string;
   constructor(private http: HttpClient) { 
-    this.url = 'http://localhost:10010/';
+    this.url = 'https://quizzer.appspot.com/';
   }
 
   getQuizz(){

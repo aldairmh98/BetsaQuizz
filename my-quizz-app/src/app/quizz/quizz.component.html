@@ -1,28 +1,52 @@
 <div class="container">
-<p>
-  quizz works!
-</p>
-
-<div>
+    <!--
+        Si no se ha recuperado el formulario se muestra esto.
+    -->
+    <div *ngIf="!isFetched" class="center-align">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+        <h1>Preparando quizz...</h1>
+    </div>
+    <!--
+        Si se ha recuperado el formulario se muestra esto.
+    -->
     
-</div>
-<div *ngFor="let pregunta of preguntas">
-    <p>
-        {{pregunta.pregunta}}
-    </p>
-    <div class="row">
-        <div class="col s1">1</div>
-        <div class="col s1">2</div>
-        <div class="col s1">3</div>
-        <div class="col s1">4</div>
-        <div class="col s1">5</div>
-        <div class="col s1">6</div>
-        <div class="col s1">7</div>
-        <div class="col s1">8</div>
-        <div class="col s1">9</div>
-        <div class="col s1">10</div>
-        <div class="col s1">11</div>
-        <div class="col s1">12</div>
-      </div>
-</div>
+    <div *ngIf="isFetched">
+        <!--
+        Si aún hay otra pregunta se verá esto
+        -->
+        <div *ngIf="current_pregunta">
+
+            <p class="flow-text">
+                <strong>
+                    {{preguntaid+1}}) {{current_pregunta.pregunta}}
+                </strong>
+            </p>
+            <ol type="A" class="collection">
+                <a href="javascript:void(0)" [className]="'collection-item'" (click)="onSelect(null, respuesta)" *ngFor="let respuesta of current_pregunta.respuestas">
+                    <li>{{respuesta.respuesta}}</li>
+                </a>
+            </ol>
+            <button title="Go" (click)="navigate()" class="waves-effect waves-light btn-large">{{btn_navigate_txt}}</button>
+        </div>
+        <!--
+        Si ya son todas se debe mostrar el resultado
+        -->
+        <div *ngIf="!current_pregunta">
+            <h3>Resultado: </h3>
+            <h2 class="center-align">{{resultado}} / {{preguntas.length}}</h2>
+            <button title="Go" routerLink="/quizz/0" class="waves-effect waves-light btn-large">Jugar de nuevo</button>
+        </div>
+    </div>
 </div>
