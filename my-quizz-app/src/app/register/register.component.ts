@@ -40,7 +40,10 @@ export class RegisterComponent implements OnInit {
     user.username = formValue.name;
     user.password = formValue.password;
     user.email = formValue.email;
-    this.userService.create(user);
+    this.userService.create(user).subscribe(
+      data => {
+        alert('Registrado');
+      }
+    );;
   }
-  
 }
