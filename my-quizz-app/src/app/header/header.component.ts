@@ -7,9 +7,7 @@ import { Pregunta } from '../model/pregunta';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  private preguntas: Pregunta[];
-  constructor(private quizzService: QuizzService) { }
+  constructor() { }
 
   ngOnInit() {
     

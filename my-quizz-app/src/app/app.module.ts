@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { QuizzComponent } from './quizz/quizz.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +27,9 @@ import { RegisterComponent } from './register/register.component';
     BrowserAnimationsModule,
     MzButtonModule,
     MzInputModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

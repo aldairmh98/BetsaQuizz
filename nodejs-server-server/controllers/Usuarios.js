@@ -30,7 +30,7 @@ module.exports.crearUsuario = function crearUsuario (req, res, next) {
   var usuario = req.swagger.params['usuario'].value;
   Usuarios.crearUsuario(usuario)
     .then(function (response) {
-      utils.writeJson(res, response);
+      utils.writeJson(res, null, 201);
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -53,7 +53,10 @@ module.exports.login = function login (req, res, next) {
   var password = req.swagger.params['password'].value;
   Usuarios.login(username,password)
     .then(function (response) {
-      utils.writeJson(res, response);
+      if(response)
+        utils.writeJson(res, response);
+      else
+        utils.writeJson(res, null, 404);
     })
     .catch(function (response) {
       utils.writeJson(res, response);
